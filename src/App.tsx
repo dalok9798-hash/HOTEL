@@ -416,83 +416,76 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-900 font-sans relative">
-      {/* Simulation Helper Rail block to switch views instantly */}
-      <div className="bg-slate-950 px-4 py-2 border-b border-slate-800 text-xs text-slate-400 flex flex-wrap justify-between items-center gap-3 relative z-40 font-semibold shadow-md">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 block animate-pulse"></span>
-          <span className="text-[10px] text-slate-400 uppercase font-black tracking-wider">Evaluation Simulator Switchboard:</span>
-        </div>
-
-        <div className="flex gap-1">
-          <button
-            onClick={() => setCurrentTab("customer")}
-            className={`py-1 px-3 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
-              currentTab === "customer" 
-                ? "bg-emerald-500 text-slate-950 font-bold shadow-xs" 
-                : "hover:bg-slate-800 text-slate-450 hover:text-slate-100"
-            }`}
-          >
-            <ShoppingCart className="w-3.5 h-3.5" />
-            <span>Table Menu</span>
-          </button>
-
-          <button
-            onClick={() => {
-              if (!session) {
-                // Keep customer menu as is, will prompt login inside viewport
-              }
-              setCurrentTab("staff");
-            }}
-            className={`py-1 px-3 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
-              currentTab === "staff" 
-                ? "bg-slate-900 border border-slate-800 text-slate-100 font-bold scale-[1.02]" 
-                : "hover:bg-slate-800 text-slate-450 hover:text-slate-100"
-            }`}
-          >
-            <Monitor className="w-3.5 h-3.5" />
-            <span>Staff Portal {session?.role === "staff" && "✅"}</span>
-          </button>
-
-          <button
-            onClick={() => setCurrentTab("kitchen")}
-            className={`py-1 px-3 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
-              currentTab === "kitchen" 
-                ? "bg-slate-900 border border-slate-800 text-slate-100 font-bold scale-[1.02]" 
-                : "hover:bg-slate-800 text-slate-450 hover:text-slate-100"
-            }`}
-          >
-            <ChefHat className="w-3.5 h-3.5" />
-            <span>Kitchen KDS {session?.role === "kitchen" && "✅"}</span>
-          </button>
-
-          <button
-            onClick={() => setCurrentTab("admin")}
-            className={`py-1 px-3 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
-              currentTab === "admin" 
-                ? "bg-slate-900 border border-slate-800 text-slate-100 font-bold scale-[1.02]" 
-                : "hover:bg-slate-800 text-slate-450 hover:text-slate-100"
-            }`}
-          >
-            <Settings className="w-3.5 h-3.5" />
-            <span>Admin Tools {session?.role === "admin" && "✅"}</span>
-          </button>
-        </div>
-
-        {session && (
+      {/* Operator Header shown ONLY when inside Staff, Kitchen, or Admin portals */}
+      {currentTab !== "customer" && (
+        <div className="bg-slate-950 px-6 py-3 border-b border-slate-800 text-xs text-slate-400 flex flex-wrap justify-between items-center gap-3 relative z-40 font-semibold shadow-md">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] bg-slate-800 text-slate-300 font-bold border border-slate-700 py-1 px-2.5 rounded-lg whitespace-nowrap">
-              👤 {session.username} ({session.role.toUpperCase()})
-            </span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 block animate-pulse"></span>
+            <span className="text-[10px] text-slate-200 uppercase font-black tracking-wider">Operator Console:</span>
+          </div>
+
+          <div className="flex gap-1 overflow-x-auto">
             <button
-              onClick={handleLogout}
-              className="bg-linear-to-r from-red-500/10 to-red-500/20 text-red-400 hover:text-white border border-red-900/50 hover:bg-red-900/30 rounded-lg py-1 px-2.5 transition-colors cursor-pointer text-[10px] font-extrabold flex items-center gap-1.5"
+              onClick={() => setCurrentTab("customer")}
+              className="py-1.5 px-3 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 text-slate-400 hover:text-slate-100 font-bold"
             >
-              <LogOut className="w-3 h-3" />
-              <span>Sign Out</span>
+              <ShoppingCart className="w-3.5 h-3.5 text-emerald-400" />
+              <span>← Back to Customer Menu</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab("staff")}
+              className={`py-1.5 px-3 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                currentTab === "staff" 
+                  ? "bg-slate-900 border border-slate-850 text-emerald-400 font-extrabold scale-[1.02]" 
+                  : "hover:bg-slate-850 text-slate-400 hover:text-slate-100"
+              }`}
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              <span>Staff Portal</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab("kitchen")}
+              className={`py-1.5 px-3 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                currentTab === "kitchen" 
+                  ? "bg-slate-900 border border-slate-850 text-emerald-400 font-extrabold scale-[1.02]" 
+                  : "hover:bg-slate-850 text-slate-400 hover:text-slate-100"
+              }`}
+            >
+              <ChefHat className="w-3.5 h-3.5" />
+              <span>Kitchen KDS</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab("admin")}
+              className={`py-1.5 px-3 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                currentTab === "admin" 
+                  ? "bg-slate-900 border border-slate-850 text-emerald-400 font-extrabold scale-[1.02]" 
+                  : "hover:bg-slate-850 text-slate-400 hover:text-slate-100"
+              }`}
+            >
+              <Settings className="w-3.5 h-3.5" />
+              <span>Admin Tools</span>
             </button>
           </div>
-        )}
-      </div>
+
+          {session && (
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] bg-slate-900 text-slate-300 font-bold border border-slate-800 py-1 px-2.5 rounded-lg whitespace-nowrap">
+                👤 {session.username} ({session.role.toUpperCase()})
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-gradient-to-r from-red-500/10 to-red-500/20 text-red-400 hover:text-white border border-red-950/50 hover:bg-red-950/30 rounded-lg py-1 px-2.5 transition-colors cursor-pointer text-[10px] font-extrabold flex items-center gap-1.5"
+              >
+                <LogOut className="w-3 h-3" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Main View rendering wrapper */}
       <div className="relative">
@@ -504,6 +497,10 @@ export default function App() {
             onOrderSuccess={handleOrderSuccess}
             activeOrders={orders}
             onCallWaiter={handleCallWaiter}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+            session={session}
+            onLogout={handleLogout}
           />
         ) : (
           renderOperatorPortal()
