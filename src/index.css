@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+@media print {
+  /* Hide all generic elements */
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  body > div {
+    display: none !important;
+  }
+  
+  /* Show only our special print wrapper */
+  #qr-print-layer {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+  }
+  
+  #qr-print-layer * {
+    color: black !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  /* Prevent awkward card splitting */
+  .qr-card-print {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: inline-flex !important;
+    width: 45% !important;
+    margin: 2% !important;
+  }
+}
+
